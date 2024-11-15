@@ -17,7 +17,7 @@ public class Awake {
         case SocketSetupFailed(reason: String)
         case SetSocketOptionsFailed(reason: String)
         case SendMagicPacketFailed(reason: String)
-        case ResolvingHostNameFailed
+        case IPLookUpDidFail
     }
     
     public static func target(device: Device) -> Error? {
@@ -31,7 +31,7 @@ public class Awake {
         if bcaddr == INADDR_NONE {
             let hostname = gethostbyname(device.BroadcastAddr)
             if hostname == nil {
-                return WakeError.ResolvingHostNameFailed
+                return WakeError.IPLookUpDidFail
             }
             bcaddr = inet_addr(hostname)
         }
